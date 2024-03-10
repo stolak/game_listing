@@ -26,7 +26,7 @@ class ApiController extends AbstractController
     public function index(): Response
     {
         
-        // $apiUrl = $this->params->get('api_url');
+       
 
         try {
             // Create an HTTP client
