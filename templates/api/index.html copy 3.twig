@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+     
+            
+{% for game in games %}
+
+
+            <!-- shop -->
+            <div class="col-md-3 col-xs-6" style="margin-top: 40px;">
+                <!-- product -->
+                <div class="product">
+                    <div class="product-img">
+                        <img src="./assets/img/product01.png" alt="">
+                        
+                    </div>
+                    <div class="product-body">
+                        <p class="product-category">{{game.provider_title??''}}</p>
+                        <h3 class="product-name"><a href="#">{{game.name??''}}</a></h3>
+                        <h4 class="product-price">Ratio: {{game.ratio??'' }} </h4>
+                        
+                    </div>
+                    <div class="add-to-cart">
+                        <button class="add-to-cart-btn"></i> Bet Now</button>
+                    </div>
+                </div>
+                <!-- /product -->
+            </div>
+            <!-- /shop -->
+            {% endfor %}
+            <!-- shop -->
+            <div class="col-md-3 col-xs-6">
+                <!-- product -->
+                <div class="product">
+                    <div class="product-img">
+                        <img src="./img/product01.png" alt="">
+                        
+                    </div>
+                    <div class="product-body">
+                        <p class="product-category">Category</p>
+                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                        <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                        
+                    </div>
+                    <div class="add-to-cart">
+                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                    </div>
+                </div>
+                <!-- /product -->
+            </div>
+            <!-- /shop -->
+            <!-- shop -->
+            <div class="col-md-3 col-xs-6">
+                <!-- product -->
+                <div class="product">
+                    <div class="product-img">
+                        <img src="./img/product01.png" alt="">
+                        
+                    </div>
+                    <div class="product-body">
+                        <p class="product-category">Category</p>
+                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                        <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                        
+                    </div>
+                    <div class="add-to-cart">
+                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                    </div>
+                </div>
+                <!-- /product -->
+            </div>
+            <!-- /shop -->
+            <!-- shop -->
+            <div class="col-md-3 col-xs-6">
+                <!-- product -->
+                <div class="product">
+                    <div class="product-img">
+                        <img src="./img/product01.png" alt="">
+                        
+                    </div>
+                    <div class="product-body">
+                        <p class="product-category">Category</p>
+                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                        <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                        
+                        
+                    </div>
+                    <div class="add-to-cart">
+                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Bet Now</button>
+                    </div>
+                </div>
+                <!-- /product -->
+            </div>
+            <!-- /shop -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+{% endblock %}

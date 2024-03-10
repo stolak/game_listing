@@ -1,0 +1,43 @@
+{# Your array of games #}
+{% set games = [
+    { 'name': 'Game 1', 'genre': 'Action', 'platform': 'PC' },
+    { 'name': 'Game 2', 'genre': 'Adventure', 'platform': 'PlayStation' },
+    { 'name': 'Game 3', 'genre': 'Action', 'platform': 'Xbox' }
+] %}
+
+{# Get the search query from the request parameters #}
+{% set searchQuery = app.request.query.get('searchQuery') %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Search</title>
+</head>
+<body>
+
+<form action="" method="get">
+    <input type="text" name="searchQuery" placeholder="Enter your search query" value="{{ searchQuery }}">
+    <button type="submit">Search</button>
+</form>
+
+{% if searchQuery is defined %}
+    {# Filter the games based on the search query #}
+    {% set filteredGames = games|filter(game => game.genre == searchQuery) %}
+    
+    {% if filteredGames|length > 0 %}
+        {# Render the filtered results in a list format #}
+        <h2>Search Results:</h2>
+        <ul>
+            {% for game in filteredGames %}
+                <li>{{ game.name }} - Genre: {{ game.genre }} - Platform: {{ game.platform }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found for '{{ searchQuery }}'.</p>
+    {% endif %}
+{% endif %}
+
+</body>
+</html>

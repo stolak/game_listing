@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<form>
+    <input type="text" id="searchQuery" placeholder="Enter your search query">
+</form>
+
+
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <div id="searchResults"></div>
+            
+            
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+{% endblock %}
+
+
+
+{% block javascript %}
+<script>
+    $(document).ready(function() {
+        $('#searchQuery').on('input', function() {
+            // Get the search query from the input field
+            var searchQuery = $(this).val().toLowerCase();
+
+            // Filter the games based on the search query
+            var filteredGames = {{ games|json_encode|raw }}.filter(function(game) {
+                return game.name.toLowerCase().includes(searchQuery);
+            });
+
+var numberOfGamesToShow = 10;
+var currentDisplayedGames = numberOfGamesToShow;
+
+            // Render the filtered results in a list format
+            var resultsHtml = '';
+
+filteredGames.forEach(function(game) {
+    resultsHtml += '<div class="col-md-3 col-xs-6" style="margin-top: 40px;">';
+    resultsHtml += '<div class="product">';
+    resultsHtml += '<div class="product-img">';
+    resultsHtml += '<img src="./assets/img/product01.png" alt="">'; // Assuming game.imagePath contains the image URL
+    resultsHtml += '</div>';
+    resultsHtml += '<div class="product-body">';
+    resultsHtml += '<p class="product-category">' + (game.provider_title || '') + '</p>';
+    resultsHtml += '<h3 class="product-name"><a href="#">' + (game.name || '') + '</a></h3>';
+    resultsHtml += '<h4 class="product-price">Ratio: ' + (game.ratio || '') + '</h4>';
+    resultsHtml += '</div>';
+    resultsHtml += '<div class="add-to-cart">';
+    resultsHtml += '<button class="add-to-cart-btn" onclick="betNow()">Bet Now</button>';
+    resultsHtml += '</div>';
+    resultsHtml += '</div>';
+    resultsHtml += '</div>';
+});
+
+            // Display the filtered results
+            $('#searchResults').html(resultsHtml);
+        });
+    });
+</script>
+
+{% endblock %}

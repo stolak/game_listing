@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <div id="searchResults"></div>
+            
+            
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+{% endblock %}
+
+
+
+{% block javascript %}
+<script>
+    $(document).ready(function() {
+        var numberOfGamesToShow = 12;
+        var currentDisplayedGames = numberOfGamesToShow;
+        var games = {{ games|json_encode|raw }}; 
+
+        function renderGames(filteredGames, numberOfGames) {
+            var resultsHtml = '';
+
+            filteredGames.slice(0, numberOfGames).forEach(function(game) {
+                resultsHtml += '<div class="col-md-3 col-xs-6" style="margin-top: 40px;">';
+                resultsHtml += '<div class="product">';
+                resultsHtml += '<div class="product-img">';
+                resultsHtml += '<img src="./assets/img/images.jfif" alt="">';
+                resultsHtml += '</div>';
+                resultsHtml += '<div class="product-body">';
+                resultsHtml += '<p class="product-category">.</p>';
+                resultsHtml += '<h3 class="product-name"><a href="#">' + (game.name || '') + '</a></h3>';
+                
+                resultsHtml += '</div>';
+                resultsHtml += '<div class="add-to-cart" style="background-color: #f0f0f0; ">';
+                resultsHtml += '<p class="product-category">Provider: '  + (game.provider_title || '') + '</p>';
+                resultsHtml += '<h4 class="product-price">Ratio: ' + (game.ratio || '1:1') + '</h4>';
+                resultsHtml += '</div>';
+                resultsHtml += '</div>';
+                resultsHtml += '</div>';
+            });
+
+            return resultsHtml;
+        }
+
+        function loadMoreGames() {
+            var filteredGames = filterGames();
+            var additionalHtml = renderGames(filteredGames, currentDisplayedGames + numberOfGamesToShow);
+            $('#searchResults').append(additionalHtml);
+            currentDisplayedGames += numberOfGamesToShow;
+        }
+
+        function filterGames() {
+            var searchQuery = $('#searchQuery').val().toLowerCase();
+            return games.filter(function(game) {
+                return game.name.toLowerCase().includes(searchQuery);
+            });
+        }
+
+        function renderFilteredGames() {
+            var filteredGames = filterGames();
+            var resultsHtml = renderGames(filteredGames, numberOfGamesToShow);
+            $('#searchResults').html(resultsHtml);
+            currentDisplayedGames = numberOfGamesToShow;
+        }
+
+        // Load games when the page is loaded
+        renderFilteredGames();
+
+        // Search functionality when input changes
+        $('#searchQuery').on('input', function() {
+            renderFilteredGames();
+        });
+
+        // Load more games when scrolling to the bottom
+        $(window).scroll(function() {
+            if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+                loadMoreGames();
+            }
+        });
+    });
+</script>
+
+
+
+{% endblock %}
